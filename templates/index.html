@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcript Insights Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Transcript Insights Dashboard</h1>
+            <p class="subtitle">Analyze product insights from sales call transcripts</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="tab-button" onclick="showTab('transcripts')">Transcripts</button>
+            <button class="tab-button" onclick="showTab('insights')">All Insights</button>
+            <button class="tab-button" onclick="showTab('upload')">Upload Transcript</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <h3>Total Transcripts</h3>
+                    <div class="stat-value" id="totalTranscripts">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Insights</h3>
+                    <div class="stat-value" id="totalInsights">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Feature Requests</h3>
+                    <div class="stat-value" id="featureRequests">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pain Points</h3>
+                    <div class="stat-value" id="painPoints">0</div>
+                </div>
+            </div>
+
+            <div class="insights-summary" id="insightsSummary">
+                <h2>Insights Summary</h2>
+                <div id="summaryContent">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Transcripts Tab -->
+        <div id="transcripts" class="tab-content">
+            <div class="controls">
+                <input type="text" id="searchClient" placeholder="Search by client name..." />
+                <button onclick="loadTranscripts()">Refresh</button>
+            </div>
+            <div id="transcriptsList" class="list-container">
+                Loading transcripts...
+            </div>
+        </div>
+
+        <!-- All Insights Tab -->
+        <div id="insights" class="tab-content">
+            <div class="controls">
+                <select id="filterCategory" onchange="loadInsights()">
+                    <option value="">All Categories</option>
+                    <option value="feature_request">Feature Requests</option>
+                    <option value="pain_point">Pain Points</option>
+                    <option value="positive_feedback">Positive Feedback</option>
+                    <option value="concern">Concerns</option>
+                </select>
+                <select id="filterSentiment" onchange="loadInsights()">
+                    <option value="">All Sentiments</option>
+                    <option value="positive">Positive</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="negative">Negative</option>
+                </select>
+                <select id="filterPriority" onchange="loadInsights()">
+                    <option value="">All Priorities</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <div id="insightsList" class="list-container">
+                Loading insights...
+            </div>
+        </div>
+
+        <!-- Upload Tab -->
+        <div id="upload" class="tab-content">
+            <form id="uploadForm" class="upload-form">
+                <h2>Upload New Transcript</h2>
+                
+                <div class="form-group">
+                    <label for="transcriptTitle">Title *</label>
+                    <input type="text" id="transcriptTitle" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientName">Client Name</label>
+                    <input type="text" id="clientName" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="callDate">Call Date</label>
+                    <input type="datetime-local" id="callDate" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="transcriptContent">Transcript Content *</label>
+                    <textarea id="transcriptContent" rows="15" required 
+                              placeholder="Paste the transcript content here..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Upload & Process</button>
+                <div id="uploadStatus" class="status-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
