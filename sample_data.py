@@ -2,7 +2,7 @@
 Sample data script to populate the database with example transcripts for testing.
 This is useful for demonstrating the application without needing Azure OpenAI credentials.
 """
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from app import app, db
 from models import Transcript, Insight
 
@@ -20,7 +20,7 @@ def create_sample_data():
         transcript1 = Transcript(
             title="Discovery Call - TechCorp Solutions",
             client_name="TechCorp Solutions",
-            call_date=datetime.utcnow() - timedelta(days=2),
+            call_date=datetime.now(timezone.utc) - timedelta(days=2),
             content="""
             Sales Rep: Thanks for joining us today. Can you tell me about your current workflow?
             
@@ -104,7 +104,7 @@ def create_sample_data():
         transcript2 = Transcript(
             title="Follow-up Call - FinanceFlow Inc",
             client_name="FinanceFlow Inc",
-            call_date=datetime.utcnow() - timedelta(days=5),
+            call_date=datetime.now(timezone.utc) - timedelta(days=5),
             content="""
             Sales Rep: Thanks for the follow-up. Have you had a chance to try the demo?
             
@@ -182,7 +182,7 @@ def create_sample_data():
         transcript3 = Transcript(
             title="Quarterly Review - DataDrive Systems",
             client_name="DataDrive Systems",
-            call_date=datetime.utcnow() - timedelta(days=10),
+            call_date=datetime.now(timezone.utc) - timedelta(days=10),
             content="""
             Sales Rep: How has your experience been over the past quarter?
             

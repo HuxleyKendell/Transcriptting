@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from datetime import datetime
+from datetime import datetime, timezone
 from config import Config
 from models import db, Transcript, Insight
 from openai_service import OpenAIService
@@ -65,7 +65,7 @@ def handle_transcripts():
             title=data.get('title', 'Untitled Transcript'),
             content=data.get('content'),
             client_name=data.get('client_name'),
-            call_date=datetime.fromisoformat(data['call_date']) if 'call_date' in data else datetime.utcnow()
+            call_date=datetime.fromisoformat(data['call_date']) if 'call_date' in data else datetime.now(timezone.utc)
         )
         
         db.session.add(transcript)

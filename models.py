@@ -1,7 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+def utcnow():
+    """Return current UTC time with timezone"""
+    return datetime.now(timezone.utc)
 
 class Transcript(db.Model):
     """Model for storing sales call transcripts"""
@@ -10,9 +14,9 @@ class Transcript(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    call_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    call_date = db.Column(db.DateTime, nullable=False, default=utcnow)
     client_name = db.Column(db.String(200))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=utcnow)
     processed = db.Column(db.Boolean, default=False)
     
     # Relationship to insights
@@ -42,7 +46,7 @@ class Insight(db.Model):
     content = db.Column(db.Text, nullable=False)
     sentiment = db.Column(db.String(50))  # e.g., 'positive', 'negative', 'neutral'
     priority = db.Column(db.String(50))  # e.g., 'high', 'medium', 'low'
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=utcnow)
     
     def to_dict(self):
         """Convert model to dictionary"""
